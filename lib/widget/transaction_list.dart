@@ -19,7 +19,7 @@ return Card(
                 child: Row(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                       child: Text(
                         "\$${userTransaction[index].amount.toStringAsFixed(2)}",
                         style: TextStyle(
