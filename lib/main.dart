@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './widget/transaction_list.dart';
 import './widget/transaction_input.dart';
 import './models/transaction.dart';
+import './widget/chart.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,23 @@ class MyApp extends StatelessWidget {
     MyHomePage();
     return MaterialApp(
       title: "flutter App",
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+        accentColor: Colors.amber,
+        textTheme: ThemeData.light().textTheme.copyWith(
+          headline1:TextStyle(fontFamily: 'OpenSans',
+        fontSize:25,
+        fontWeight: FontWeight.bold)
+        // title:TextStyle(fontFamily: 'OpenSans',
+        // fontSize:25,)
+        // fontFamily: "YuseiMagic",
+        // appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(
+        // title:TextStyle(fontFamily: 'OpenSans',
+        // fontSize:25,)
+        // ))
+         ),
+      ),
+     
       home: MyHomePage(),
     );
   }
@@ -27,25 +45,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransaction = [
-    Transaction(
-      title: "melon",
-      amount: 25.55,
-      date: DateTime.now(),
-      id: DateTime.now().toString(),
-    ),
-    Transaction(
-      title: "Schoo bag",
-      amount: 14.99,
-      date: DateTime.now(),
-      id: DateTime.now().toString(),
-    ),
-    Transaction(
-      title: "Watch",
-      amount: 45.75,
-      date: DateTime.now(),
-      id: DateTime.now().toString(),
-    )
+ 
   ];
+
+  List<Transaction> get _recentTransactions{
+return _userTransaction.where((tx){
+return tx.date.isAfter(
+  DateTime.now().subtract(Duration(days: 7),),
+);
+}).toList();
+  }
 
   void _addTx(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -89,14 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                width: double.infinity,
-                child: Card(
-                  color: Colors.blue[100],
-                  child: Text("Chart!"),
-                  elevation: 5,
-                ),
-              ),
+              Chart(_recentTransactions),
               TxList(_userTransaction),
             ],
           ),

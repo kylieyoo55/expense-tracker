@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TxInput extends StatelessWidget {
+class TxInput extends StatefulWidget {
   final Function newTx;
 
   TxInput(this.newTx);
 
+  @override
+  _TxInputState createState() => _TxInputState();
+}
+
+class _TxInputState extends State<TxInput> {
   final titleController = TextEditingController();
+
   final amountController = TextEditingController();
-  
+
   void submitData() {
     final enteredTitle=titleController.text;
     final enteredAmount=double.parse(amountController.text);
@@ -15,10 +21,12 @@ if(enteredTitle.isEmpty || enteredAmount <= 0){
 return;
 }
 
-    newTx(
+    widget.newTx(
       enteredTitle,
       enteredAmount,
     );
+
+    Navigator.of(context).pop();
   }
 
   @override
