@@ -20,19 +20,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         accentColor: Colors.amber,
         textTheme: ThemeData.light().textTheme.copyWith(
-          headline1:TextStyle(fontFamily: 'OpenSans',
-        fontSize:25,
-        fontWeight: FontWeight.bold)
-        // title:TextStyle(fontFamily: 'OpenSans',
-        // fontSize:25,)
-        // fontFamily: "YuseiMagic",
-        // appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(
-        // title:TextStyle(fontFamily: 'OpenSans',
-        // fontSize:25,)
-        // ))
-         ),
+            headline1: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            button: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            )),
       ),
-     
       home: MyHomePage(),
     );
   }
@@ -44,23 +44,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransaction = [
- 
-  ];
+  final List<Transaction> _userTransaction = [];
 
-  List<Transaction> get _recentTransactions{
-return _userTransaction.where((tx){
-return tx.date.isAfter(
-  DateTime.now().subtract(Duration(days: 7),),
-);
-}).toList();
+  List<Transaction> get _recentTransactions {
+    return _userTransaction.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
   }
 
-  void _addTx(String txTitle, double txAmount) {
+  void _addTx(String txTitle, double txAmount, DateTime selectedDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
-      date: DateTime.now(),
+      date: selectedDate,
+      //DateTime.now(),
       id: DateTime.now().toString(),
     );
 
@@ -81,12 +82,21 @@ return tx.date.isAfter(
         });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere((el) => el.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text("Expense Tracker"),
+        title: Text("Expense Tracker",
+        style: TextStyle(
+          color:Colors.white,
+        ),),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -99,7 +109,9 @@ return tx.date.isAfter(
           child: Column(
             children: <Widget>[
               Chart(_recentTransactions),
-              TxList(_userTransaction),
+              
+                 TxList(_userTransaction, _deleteTransaction),
+              
             ],
           ),
         ),

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
+
 class TxList extends StatelessWidget {
   final List<Transaction> userTransaction;
+  final Function deleteItem;
 
-  TxList(this.userTransaction);
+  TxList(this.userTransaction,this.deleteItem);
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -26,49 +30,38 @@ class TxList extends StatelessWidget {
                 Container(
                     height: 200,
                     child: Image.asset(
-                      "assets/images/raining.png",
+                      "assets/images/empty.png",
                       fit: BoxFit.cover,
                     )),
               ])
             : ListView.builder(
                 itemBuilder: (ctx, index) {
+ 
+
                   return Card(
                     elevation: 5,
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          child: Text(
-                              "\$${userTransaction[index].amount.toStringAsFixed(2)}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Theme.of(context).primaryColor,
-                                  width: 2)),
-                          padding: EdgeInsets.all(10),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              userTransaction[index].title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            Text(
-                              DateFormat.yMEd()
-                                  .format(userTransaction[index].date),
-                              style: TextStyle(
-                                  fontSize: 15, color: Colors.grey[600]),
-                            ),
-                          ],
-                        )
-                      ],
+                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        radius: 30,
+                        child: FittedBox(
+                            child: Text("\$${userTransaction[index].amount}",
+                            style: TextStyle(color:Colors.white,),)),
+                      ),
+                      title: Text(
+                        userTransaction[index].title,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      subtitle: Text(
+                        DateFormat.yMMMd().format(userTransaction[index].date)
+                        ,
+                        
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
+                         onPressed: ()=>deleteItem(userTransaction[index].id)),
                     ),
                   );
                 },
@@ -76,3 +69,4 @@ class TxList extends StatelessWidget {
               ));
   }
 }
+

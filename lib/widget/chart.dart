@@ -15,7 +15,7 @@ class Chart extends StatelessWidget {
         Duration(days: index),
       );
       var totalSum = 0.0;
-      for (var i = 0; i < recentTransactions.length; i++) {
+      for (var i = 0; i< recentTransactions.length; i++) {
         if (recentTransactions[i].date.day == weekDay.day &&
             recentTransactions[i].date.month == weekDay.month &&
             recentTransactions[i].date.year == weekDay.year) {
@@ -24,7 +24,7 @@ class Chart extends StatelessWidget {
       }
 
       return {"day": DateFormat.E().format(weekDay), "amount": totalSum};
-    });
+    }).reversed.toList();
   }
 double get totalSpending{
   return groupedTransactionValues.fold(0.0, (sum, el){
@@ -34,7 +34,7 @@ return sum+el["amount"];
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
+   
     return Card(
       margin: EdgeInsets.all(20),
       elevation: 6,
@@ -48,7 +48,7 @@ return sum+el["amount"];
                         child: ChartBar(
                 label:el["day"],
                 spendingAmount: el["amount"] ,
-                spendingPct: totalSpending== 0.0 ?0.0 :(el["amount"] as double)/totalSpending,),
+                spendingPct: totalSpending== 0.0 ? 0.0 :(el["amount"] as double)/totalSpending,),
             );
             // Text("${el["day"]} : ${el["amount"].toString()}");
           }).toList(),
