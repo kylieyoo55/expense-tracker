@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import './adaptive_button.dart';
 
 class TxInput extends StatefulWidget {
   final Function newTx;
@@ -93,16 +97,7 @@ final DateTime pickedDate= _selectedDate;
                             : "Picked Date:${DateFormat.yMd().format(_selectedDate)}",
                       ),
                     ),
-                    FlatButton(
-                      onPressed: _presentDatePicker,
-                      child: Text(
-                        "Choose Date",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      textColor: Theme.of(context).primaryColor,
-                    ),
+                    AdaptiveButton("Choose Date", _presentDatePicker)
                   ],
                 ),
               ),
