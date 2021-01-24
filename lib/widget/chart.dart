@@ -35,23 +35,26 @@ return sum+el["amount"];
   @override
   Widget build(BuildContext context) {
    
-    return Card(
-      margin: EdgeInsets.all(20),
-      elevation: 6,
-      child: Container(
-        padding: EdgeInsets.all(10),
-              child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: groupedTransactionValues.map((el){
-            return Flexible(
-              fit: FlexFit.tight,
-                        child: ChartBar(
-                label:el["day"],
-                spendingAmount: el["amount"] ,
-                spendingPct: totalSpending== 0.0 ? 0.0 :(el["amount"] as double)/totalSpending,),
-            );
-            // Text("${el["day"]} : ${el["amount"].toString()}");
-          }).toList(),
+    return Container(
+      height: MediaQuery.of(context).size.height*0.26,
+          child: Card(
+        margin: EdgeInsets.all(20),
+        elevation: 6,
+        child: Container(
+          padding: EdgeInsets.all(10),
+                child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: groupedTransactionValues.map((el){
+              return Flexible(
+                fit: FlexFit.tight,
+                          child: ChartBar(
+                  label:el["day"],
+                  spendingAmount: el["amount"] ,
+                  spendingPct: totalSpending== 0.0 ? 0.0 :(el["amount"] as double)/totalSpending,),
+              );
+              // Text("${el["day"]} : ${el["amount"].toString()}");
+            }).toList(),
+          ),
         ),
       ),
     );
