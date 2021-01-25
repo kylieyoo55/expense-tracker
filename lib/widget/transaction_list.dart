@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import 'package:intl/intl.dart';
+
+import './transaction_items.dart';
 
 class TxList extends StatelessWidget {
   final List<Transaction> userTransaction;
@@ -35,48 +36,7 @@ class TxList extends StatelessWidget {
           )
         : ListView.builder(
             itemBuilder: (ctx, index) {
-              return Card(
-                elevation: 5,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor,
-                    radius: 30,
-                    child: FittedBox(
-                        child: Text(
-                      "\$${userTransaction[index].amount}",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    )),
-                  ),
-                  title: Text(
-                    userTransaction[index].title,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  subtitle: Text(
-                    DateFormat.yMMMd().format(userTransaction[index].date),
-                  ),
-                  trailing: MediaQuery.of(context).size.width > 400
-                      ? FlatButton.icon(
-                          icon: Icon(
-                            Icons.delete,
-                          ),
-                          label: Text(
-                            "Delete",
-                            style: TextStyle(),
-                          ),
-                          textColor: Theme.of(context).errorColor,
-                          onPressed: () =>
-                              deleteItem(userTransaction[index].id),
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                          onPressed: () =>
-                              deleteItem(userTransaction[index].id)),
-                ),
-              );
+              return TransactionItem(userTransaction: userTransaction[index], deleteItem: deleteItem);
             },
             itemCount: userTransaction.length,
           );
