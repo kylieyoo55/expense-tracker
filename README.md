@@ -1,6 +1,6 @@
 # this is what I made
 ![My image](https://github.com/kylieyoo55/expense-tracker/blob/master/images/exp_list.JPG)
-
+![My image](https://github.com/kylieyoo55/expense-tracker/blob/master/images/exp_schedule.JPG)
 
 
 # exp_tracker
