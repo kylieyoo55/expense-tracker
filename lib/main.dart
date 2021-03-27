@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
-//build when Portraite mode
+//only excute when portrait(horizon )mode
   List<Widget> _buildPortraitContent(
       MediaQueryData mediaQuery, AppBar appBar, Widget txListWidget) {
     return [
@@ -147,41 +147,43 @@ class _MyHomePageState extends State<MyHomePage> {
       txListWidget
     ];
   }
-//build Cupertino when IOS
-Widget _buildCupertino(){
-  return CupertinoNavigationBar(
-            middle: Text("Expense Tracker"),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                GestureDetector(
-                  child: Icon(CupertinoIcons.add),
-                  onTap: () => _showNewTransaction(context),
-                )
-              ],
-            ),
-          );
-}
-//buil AppBar when Android
 
-Widget _buildAppBar(){
-  return AppBar(
-            title: Text(
-              "Expense Tracker",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+//build Cupertino when IOS( Automactically detected)
+  Widget _buildCupertino() {
+    return CupertinoNavigationBar(
+      middle: Text("Expense Tracker"),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          GestureDetector(
+            child: Icon(CupertinoIcons.add),
+            onTap: () => _showNewTransaction(context),
+          )
+        ],
+      ),
+    );
+  }
+//build AppBar when Android
 
-            //button
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => _showNewTransaction(context),
-              ),
-            ],
-          );
-}
+  Widget _buildAppBar() {
+    return AppBar(
+      title: Text(
+        "Expense Tracker",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+
+      //button
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _showNewTransaction(context),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //MediaQuery variable
@@ -189,9 +191,8 @@ Widget _buildAppBar(){
     //LandScape Orientation
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     //AppBar
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? _buildCupertino()
-        : _buildAppBar();
+    final PreferredSizeWidget appBar =
+        Platform.isIOS ? _buildCupertino() : _buildAppBar();
 
     final txListWidget = Container(
       height: (mediaQuery.size.height -
